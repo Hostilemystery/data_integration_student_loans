@@ -1,0 +1,1 @@
+# HDFS settings and paths

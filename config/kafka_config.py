@@ -1,0 +1,1 @@
+# Kafka settings (topic names, servers, etc.)
