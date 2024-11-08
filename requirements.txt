@@ -8,3 +8,5 @@ pyspark==3.5.3
 setuptools==75.3.0
 xlrd==2.0.1
 openpyxl==3.1.5
+hdfs==2.7.3
+PyHDFS==0.3.1
