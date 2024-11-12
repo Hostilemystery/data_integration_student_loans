@@ -1,14 +1,8 @@
 # Script to load files into HDFS# import the python subprocess module
 import os
 import pyhdfs
+from config.hdfs_config import *
 
-# HDFS configuration
-HDFS_HOST = 'localhost'  # Replace with your HDFS host
-HDFS_PORT = 9870         # Default WebHDFS port
-HDFS_DEST_PATH = '/user/hadoop/data/raw'  # Destination path in HDFS
-
-# Local directory containing raw data files
-LOCAL_RAW_DATA_PATH = '/home/freddy/Documents/Cours_efrei/Data_integration/Projets_data_integration/data_integration_student_loans/data/raw'
 
 def upload_files_to_hdfs(local_path, hdfs_path, hdfs_client):
     # Ensure the HDFS directory exists
@@ -40,7 +34,7 @@ def main():
     hdfs_client = pyhdfs.HdfsClient(hosts=f"{HDFS_HOST}:{HDFS_PORT}")
     
     # Start uploading files
-    upload_files_to_hdfs(LOCAL_RAW_DATA_PATH, HDFS_DEST_PATH, hdfs_client)
+    upload_files_to_hdfs(LOCAL_RAW_DATA_PATH, HDFS_RAW_DEST_PATH, hdfs_client)
 
 if __name__ == "__main__":
     main()
