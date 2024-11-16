@@ -4,10 +4,7 @@ import logging
 from config import hdfs_config
 
 
-HDFS_HOST = hdfs_config.HDFS_HOST
-HDFS_PORT = hdfs_config.HDFS_PORT
-LOCAL_RAW_DATA_PATH = hdfs_config.LOCAL_RAW_DATA_PATH
-HDFS_RAW_DEST_PATH = hdfs_config.HDFS_RAW_DEST_PATH
+
 
 
 # Set up logging

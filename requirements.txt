@@ -11,3 +11,4 @@ openpyxl==3.1.5
 hdfs==2.7.3
 PyHDFS==0.3.1
 kafka-python==2.0.3
+pyarrow==18.0.0
