@@ -1,40 +1,66 @@
-# Script to load files into HDFS# import the python subprocess module
 import os
 import pyhdfs
-from config.hdfs_config import *
+import logging
+from config import hdfs_config
 
+
+HDFS_HOST = hdfs_config.HDFS_HOST
+HDFS_PORT = hdfs_config.HDFS_PORT
+LOCAL_RAW_DATA_PATH = hdfs_config.LOCAL_RAW_DATA_PATH
+HDFS_RAW_DEST_PATH = hdfs_config.HDFS_RAW_DEST_PATH
+
+
+# Set up logging
+logging.basicConfig(
+    filename="logs/hdfs_loader.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 def upload_files_to_hdfs(local_path, hdfs_path, hdfs_client):
-    # Ensure the HDFS directory exists
-    if not hdfs_client.exists(hdfs_path):
-        hdfs_client.mkdirs(hdfs_path)
-        print(f"Created HDFS directory: {hdfs_path}")
+    """Uploads files from a local directory to HDFS."""
     
-    # Iterate through files in the local raw data directory
-    for file_name in os.listdir(local_path):
-        local_file_path = os.path.join(local_path, file_name)
+    try:
+        # Ensure the HDFS directory exists
+        if not hdfs_client.exists(hdfs_path):
+            hdfs_client.mkdirs(hdfs_path)
+            logging.info(f"Created HDFS directory: {hdfs_path}")
         
-        # Only process files
-        if os.path.isfile(local_file_path):
-            hdfs_file_path = f"{hdfs_path}/{file_name}"
+        # Iterate through files in the local raw data directory
+        for file_name in os.listdir(local_path):
+            local_file_path = os.path.join(local_path, file_name)
             
-            # Upload file to HDFS
-            with open(local_file_path, 'rb') as file_data:
-                hdfs_client.create(hdfs_file_path, file_data)
-            print(f"Uploaded {file_name} to HDFS at {hdfs_file_path}")
-            
-            # Verify upload success
-            if hdfs_client.exists(hdfs_file_path):
-                print(f"Successfully uploaded: {file_name}")
-            else:
-                print(f"Failed to upload: {file_name}")
+            # Only process files
+            if os.path.isfile(local_file_path):
+                hdfs_file_path = f"{hdfs_path}/{file_name}"
+                
+                # Upload file to HDFS
+                with open(local_file_path, 'rb') as file_data:
+                    hdfs_client.create(hdfs_file_path, file_data)
+                logging.info(f"Uploaded {file_name} to HDFS at {hdfs_file_path}")
+                
+                # Verify upload success
+                if hdfs_client.exists(hdfs_file_path):
+                    logging.info(f"Successfully uploaded: {file_name}")
+                else:
+                    logging.error(f"Failed to upload: {file_name}")
+
+    except Exception as e:
+        logging.error(f"Error uploading files to HDFS: {e}")
 
 def main():
-    # Initialize HDFS client
-    hdfs_client = pyhdfs.HdfsClient(hosts=f"{HDFS_HOST}:{HDFS_PORT}")
+    """Main function to initialize HDFS client and upload files."""
     
-    # Start uploading files
-    upload_files_to_hdfs(LOCAL_RAW_DATA_PATH, HDFS_RAW_DEST_PATH, hdfs_client)
+    try:
+        # Initialize HDFS client
+        hdfs_client = pyhdfs.HdfsClient(hosts=f"{HDFS_HOST}:{HDFS_PORT}")
+        logging.info("HDFS client initialized")
+        
+        # Start uploading files
+        upload_files_to_hdfs(LOCAL_RAW_DATA_PATH, HDFS_RAW_DEST_PATH, hdfs_client)
+        
+    except Exception as e:
+        logging.error(f"Failed to initialize HDFS client: {e}")
 
 if __name__ == "__main__":
     main()

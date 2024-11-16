@@ -1,0 +1,27 @@
+aller dans le répertoire avec le fichier yml
+
+docker compose up
+
+docker exec -it kafka /bin/sh
+
+cd opt
+
+cd kafka_2.13-2.8.1
+
+cd bin
+
+
+créer un topic :
+kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partition 1 --topic quickstart(nom du topic)
+
+
+----kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+
+démmarer un producer : 
+kafka-console-producer.sh --topic quickstart --bootstrap-server localhost:9092
+---kafka-console-producer.sh --topic test --bootstrap-server localhost:9092
+démmarer un consumer : 
+kafka-console-consumer.sh --topic quickstart --from-beginning --bootstrap-server localhost:9092
+
+pour utiliser kafka avec python :
+pip install --break-system-packages git+https://github.com/dpkp/kafka-python.git
