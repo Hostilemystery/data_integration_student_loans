@@ -35,6 +35,6 @@ class HDFSConfig:
 
     # Local Paths
     LOCAL_RAW_DATA_PATH = '/home/freddy/Documents/Cours_efrei/Data_integration/Projets_data_integration/data_integration_student_loans/data/raw'
-
+    LOCAL_CLEAN_DATA_PATH = '/home/freddy/Documents/Cours_efrei/Data_integration/Projets_data_integration/data_integration_student_loans/data/cleaned'
     # HDFS File Settings
     REPLICATION_FACTOR = 1  # Adjust for cluster setup
