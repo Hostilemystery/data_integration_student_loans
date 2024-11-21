@@ -7,13 +7,15 @@ def read_parquet():
         .getOrCreate()
     
     # Définir le chemin HDFS où les fichiers Parquet sont stockés
-    hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/dfparquet"
-    
+    #hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/dfparquet"
+    hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/dataframes"
+    #hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/jointest"
+
     # Lire les fichiers Parquet en tant que DataFrame
     df = spark.read.parquet(hdfs_parquet_path)
     
     # Afficher les premières lignes du DataFrame
-    df.show(1)
+    #df.show(50)
     
     # Afficher le schéma du DataFrame
     df.printSchema()
