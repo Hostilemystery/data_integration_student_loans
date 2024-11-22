@@ -1,1 +1,0 @@
-# Schema definition and management functions

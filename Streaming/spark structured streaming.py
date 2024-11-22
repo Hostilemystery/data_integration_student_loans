@@ -9,9 +9,9 @@ def main():
         .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3") \
         .getOrCreate()
 
-    spark.sparkContext.setLogLevel("WARN")  # Réduire la verbosité des logs
+    spark.sparkContext.setLogLevel("WARN")
 
-    # Définir le schéma des messages JSON
+    # Définition du schéma des messages en JSON
     message_schema = StructType([
         StructField("SchoolCode", StringType(), True),
         StructField("SchoolName", StringType(), True),
@@ -23,7 +23,7 @@ def main():
         StructField("timestamp", DoubleType(), True)
     ])
 
-    # Lire le flux de données depuis Kafka
+    # Lecture depuis Kafka
     kafka_df = spark.readStream \
         .format("kafka") \
         .option("kafka.bootstrap.servers", "localhost:9092") \
@@ -31,19 +31,18 @@ def main():
         .option("startingOffsets", "earliest") \
         .load()
 
-    # Extraire la valeur du message et la désérialiser du format JSON
+    # Extraction des valeurs du message
     value_df = kafka_df.selectExpr("CAST(value AS STRING) as json_string")
 
-    # Convertir la chaîne JSON en colonnes structurées
+    # Convertion de la chaîne JSON en colonnes structurées
     json_df = value_df.select(from_json(col("json_string"), message_schema).alias("data")).select("data.*")
 
-    # Convertir le timestamp en format timestamp
+    # Convertion du timestamp en format timestamp
     processed_df = json_df.withColumn("event_time", (col("timestamp")).cast(TimestampType()))
 
-    # Définir le chemin HDFS où les DataFrames seront enregistrés
     hdfs_output_path = "hdfs://localhost:9080/user/anthonycormeaux/data/dataframes"
 
-    # Écrire le flux de données dans HDFS en format Parquet, chaque batch sera un nouveau répertoire
+    # Écrire le flux de données dans HDFS en format Parquet, chaque batch sera un nouveau parquet
     query = processed_df.writeStream \
         .format("parquet") \
         .option("path", hdfs_output_path) \
