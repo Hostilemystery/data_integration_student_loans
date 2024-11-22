@@ -10,7 +10,7 @@ def read_parquet():
     #hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/dfparquet"
     #hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/dataframes"
     #hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/jointest"
-    hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/loan_evolution"
+    hdfs_parquet_path = "hdfs://localhost:9080//user/anthonycormeaux/data/result/joined_data"
 
     # Lire les fichiers Parquet en tant que DataFrame
     df = spark.read.parquet(hdfs_parquet_path)

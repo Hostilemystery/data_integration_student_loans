@@ -20,7 +20,7 @@ def json_serializer(data):
 topic_name = 'excel_data'
 
 # Taille du batch
-batch_size = 1000
+batch_size = 100
 
 # Temps de pause en secondes
 sleep_time = 10
