@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 import pandas as pd
 
-excel_file_path = r"/Users/anthonycormeaux/Documents/Projet_data_integration/Nouvelle version/data_integration_student_loans/Streaming/1617fedschoolcodelist.xls"
+excel_file_path = r"Streaming/1617fedschoolcodelist.xls"
 
 df = pd.read_excel(excel_file_path)
 

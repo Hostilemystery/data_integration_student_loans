@@ -23,13 +23,25 @@ def main():
         StructField("timestamp", DoubleType(), True)
     ])
 
-    # Lecture depuis Kafka
+
+    # # Lecture depuis Kafka
+    # kafka_df = spark.readStream \
+    #     .format("kafka") \
+    #     .option("kafka.bootstrap.servers", "localhost:9092") \
+    #     .option("subscribe", "excel_data") \
+    #     .option("startingOffsets", "earliest") \
+    #     .load()
+        
+
     kafka_df = spark.readStream \
         .format("kafka") \
         .option("kafka.bootstrap.servers", "localhost:9092") \
         .option("subscribe", "excel_data") \
-        .option("startingOffsets", "earliest") \
+        .option("startingOffsets", "latest") \
+        .option("failOnDataLoss", "false") \
         .load()
+
+
 
     # Extraction des valeurs du message
     value_df = kafka_df.selectExpr("CAST(value AS STRING) as json_string")

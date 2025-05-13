@@ -8,9 +8,9 @@ def read_parquet():
         .getOrCreate()
     
     #hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/dfparquet"
-    #hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/dataframes"
+    hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/dataframes"
     #hdfs_parquet_path = "hdfs://localhost:9080/user/anthonycormeaux/data/jointest"
-    hdfs_parquet_path = "hdfs://localhost:9080//user/anthonycormeaux/data/result/joined_data"
+    #hdfs_parquet_path = "hdfs://localhost:9080//user/anthonycormeaux/data/result/joined_data"
 
     df = spark.read.parquet(hdfs_parquet_path)
 
